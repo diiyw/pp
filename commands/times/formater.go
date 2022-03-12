@@ -26,5 +26,5 @@ func (u *UnixToString) Valid(raw string) bool {
 }
 
 func (u *UnixToString) Run() string {
-	return u.c.Format("2006-05-04 15:02:01")
+	return u.c.Format(carbon.DefaultFormat)
 }
