@@ -1,7 +1,7 @@
-package commands
+package builtin
 
 import (
-	"github.com/diiyw/pp/commands/times"
+	"github.com/diiyw/pp/builtin/times"
 )
 
 type Command interface {

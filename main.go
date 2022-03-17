@@ -10,7 +10,7 @@ import (
 	"syscall"
 
 	"github.com/creack/pty"
-	"github.com/diiyw/pp/commands"
+	"github.com/diiyw/pp/builtin"
 	"golang.org/x/term"
 )
 
@@ -73,11 +73,14 @@ func main() {
 }
 
 func hook(str string) bool {
-	for _, cmd := range commands.Commands {
+	for _, cmd := range builtin.Commands {
 		if cmd.Valid(str) {
 			result := cmd.Run()
-			os.Stdout.WriteString(result)
-			return true
+			if result != "" {
+				os.Stdout.WriteString(result)
+				os.Stdout.Write([]byte{10, 13})
+				return true
+			}
 		}
 	}
 	return false
