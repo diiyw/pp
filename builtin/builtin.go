@@ -5,7 +5,7 @@ import (
 )
 
 type Command interface {
-	Valid(str string) bool
+	Valid(args ...string) bool
 	Run() string
 }
 

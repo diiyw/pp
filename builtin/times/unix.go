@@ -7,8 +7,8 @@ import (
 
 type Unix int8
 
-func (u *Unix) Valid(raw string) bool {
-	return raw == "unix"
+func (u *Unix) Valid(args ...string) bool {
+	return args[0] == "unix"
 }
 
 func (u *Unix) Run() string {

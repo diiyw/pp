@@ -6,8 +6,8 @@ import (
 
 type Now int8
 
-func (n *Now) Valid(raw string) bool {
-	return raw == "now"
+func (n *Now) Valid(args ...string) bool {
+	return args[0] == "now"
 }
 
 func (n *Now) Run() string {

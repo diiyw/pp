@@ -11,10 +11,10 @@ type UnixToString struct {
 	c *carbon.Carbon
 }
 
-func (u *UnixToString) Valid(raw string) bool {
-	if len(raw) == 10 {
-		if matched, _ := regexp.MatchString(`^\d+$`, raw); matched {
-			c, err := carbon.CreateFromTimestamp(cast.ToInt64(raw), "Asia/Shanghai")
+func (u *UnixToString) Valid(args ...string) bool {
+	if len(args[0]) == 10 {
+		if matched, _ := regexp.MatchString(`^\d+$`, args[0]); matched {
+			c, err := carbon.CreateFromTimestamp(cast.ToInt64(args[0]), "Asia/Shanghai")
 			if err != nil {
 				return false
 			}
