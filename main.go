@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/diiyw/pp/builtin"
 	"log"
 	"os"
+
+	"github.com/diiyw/pp/builtin"
 )
 
 func main() {
@@ -37,4 +38,15 @@ func install() {
 			log.Fatalln("Initialize pp env failed: ", err)
 		}
 	}
+	b, err := os.ReadFile("./pp")
+	if err != nil {
+		b, err = os.ReadFile("./pp.exe")
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	if err = os.WriteFile("/usr/local/bin/pp", b, 0755); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Install success! \nRun `. ~/.pp/.pp_profile` manually ")
 }
