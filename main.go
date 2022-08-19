@@ -15,7 +15,7 @@ func main() {
 		}
 	}
 	for _, cmd := range builtin.Commands {
-		if cmd.Valid(os.Args...) {
+		if cmd.Valid(os.Args[1:]...) {
 			result := cmd.Run()
 			fmt.Println(result)
 		}

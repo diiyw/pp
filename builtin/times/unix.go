@@ -5,10 +5,10 @@ import (
 	"github.com/uniplaces/carbon"
 )
 
-type Unix int8
+type Unix struct{}
 
 func (u *Unix) Valid(args ...string) bool {
-	return args[1] == "unix"
+	return args[0] == "unix"
 }
 
 func (u *Unix) Run() string {

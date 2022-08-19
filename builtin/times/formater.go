@@ -12,9 +12,9 @@ type UnixToString struct {
 }
 
 func (u *UnixToString) Valid(args ...string) bool {
-	if len(args[1]) == 10 {
-		if matched, _ := regexp.MatchString(`^\d+$`, args[1]); matched {
-			c, err := carbon.CreateFromTimestamp(cast.ToInt64(args[1]), "Asia/Shanghai")
+	if len(args[0]) == 10 {
+		if matched, _ := regexp.MatchString(`^\d+$`, args[0]); matched {
+			c, err := carbon.CreateFromTimestamp(cast.ToInt64(args[0]), "Asia/Shanghai")
 			if err != nil {
 				return false
 			}

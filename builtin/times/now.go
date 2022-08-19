@@ -4,10 +4,10 @@ import (
 	"github.com/uniplaces/carbon"
 )
 
-type Now int8
+type Now struct{}
 
 func (n *Now) Valid(args ...string) bool {
-	return args[1] == "now"
+	return args[0] == "now"
 }
 
 func (n *Now) Run() string {

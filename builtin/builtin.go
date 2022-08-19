@@ -1,6 +1,7 @@
 package builtin
 
 import (
+	"github.com/diiyw/pp/builtin/system"
 	"github.com/diiyw/pp/builtin/times"
 )
 
@@ -13,4 +14,5 @@ var Commands = []Command{
 	new(times.UnixToString),
 	new(times.Unix),
 	new(times.Now),
+	new(system.System),
 }
