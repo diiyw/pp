@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"strconv"
 
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/shirou/gopsutil/cpu"
@@ -25,25 +26,33 @@ func (s *System) Run() string {
 	t := table.NewWriter()
 	t.SetStyle(table.StyleLight)
 	t.SetOutputMirror(os.Stdout)
-	t.AppendHeader(table.Row{"Name", "Description"})
 	switch s.info {
 	case "cpu":
+		t.AppendHeader(table.Row{"Name", "Description"})
 		c, _ := cpu.Info()
 		v := c[0]
 		refValue := reflect.ValueOf(v)
 		refType := reflect.TypeOf(v)
 		for i := 0; i < refType.NumField(); i++ {
 			fieldType := refType.Field(i)
-			t.AppendSeparator()
-			t.AppendRow(table.Row{fieldType.Name, fmt.Sprintf("%v", refValue.Field(i))})
+			value := fmt.Sprintf("%v", refValue.Field(i))
+			if fieldType.Name == "CPU" {
+				value = strconv.Itoa(len(c))
+			}
+			if fieldType.Name == "Cores" {
+				perCores, _ := strconv.ParseInt(value, 10, 32)
+				value = strconv.Itoa(len(c) * int(perCores))
+			}
+			t.AppendRow(table.Row{fieldType.Name, value})
 		}
+	case "disk":
+
 	default:
+		t.AppendHeader(table.Row{"Name", "Description"})
 		platform, family, version, _ := host.PlatformInformation()
-		t.AppendRow(table.Row{"Platform", platform})
-		t.AppendSeparator()
 		t.AppendRow(table.Row{"Family", family})
-		t.AppendSeparator()
 		t.AppendRow(table.Row{"Version", version})
+		t.AppendRow(table.Row{"Platform", platform})
 	}
 	t.SetColumnConfigs([]table.ColumnConfig{
 		{
