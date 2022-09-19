@@ -5,10 +5,13 @@ import (
 	"os"
 	"reflect"
 	"strconv"
+	"time"
 
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/shirou/gopsutil/cpu"
+	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/host"
+	"github.com/shirou/gopsutil/mem"
 )
 
 type System struct {
@@ -68,4 +71,20 @@ func (s *System) Run() string {
 	})
 	t.Render()
 	return ""
+}
+
+func GetCpuPercent() float64 {
+	percent, _ := cpu.Percent(time.Second, false)
+	return percent[0]
+}
+
+func GetMemPercent() float64 {
+	memInfo, _ := mem.VirtualMemory()
+	return memInfo.UsedPercent
+}
+
+func GetDiskPercent() float64 {
+	parts, _ := disk.Partitions(true)
+	diskInfo, _ := disk.Usage(parts[0].Mountpoint)
+	return diskInfo.UsedPercent
 }
